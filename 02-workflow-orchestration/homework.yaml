@@ -34,6 +34,10 @@ tasks:
     commands:
       - wget -qO- https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{{inputs.taxi}}/{{render(vars.file)}}.gz | gunzip > {{render(vars.file)}}
 
+  - id: file_metadata
+    type: io.kestra.plugin.core.storage.Size
+    uri: "{{ outputs.extract.outputFiles.values() | first }}"
+
   - id: upload_to_gcs
     type: io.kestra.plugin.gcp.gcs.Upload
     from: "{{render(vars.data)}}"
