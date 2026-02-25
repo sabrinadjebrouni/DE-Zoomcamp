@@ -1,0 +1,12 @@
+services:
+  uploader:
+    build: .
+    container_name: gcs_uploader
+    volumes:
+      # Mount your secret file from the external folder
+      - /home/sabrina/key.json:/app/gcs.json
+      # Mount current dir so you can see downloaded files on your host
+      - .:/app
+    environment:
+      # This tells Google libraries where to look for the key
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/gcs.json
